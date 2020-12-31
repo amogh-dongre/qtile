@@ -2,11 +2,12 @@
 #+PROPERTY: header-args :tangle config.py
 
 * Table of Contents :toc:
-- [[#about-this-config][About This Config]]
+- [[#installation][Installation]]
+  -  [[#on-arch-based-system][On arch based system]]
+  - [[#also-install-all-the-dependencies][Also install all the dependencies]]
 - [[#features-of-qtile][Features of Qtile]]
 - [[#imports][Imports]]
 - [[#variables][Variables]]
-- [[#keybindings][Keybindings]]
 - [[#groups][Groups]]
 - [[#settings-for-some-layouts][Settings For Some Layouts]]
 - [[#layouts][Layouts]]
@@ -20,29 +21,29 @@
 - [[#floating-windows][Floating windows]]
 - [[#startup-applications][Startup applications]]
 
-* About This Config
-#+CAPTION: Qtile Scrot
-#+ATTR_HTML: :alt Qtile Scrot :title Qtile Scrot :align left
-[[https://gitlab.com/dwt1/dotfiles/-/raw/master/.screenshots/dotfiles07-thumb.png]]
+* Installation
+**  On arch based system
+#+begin_src bash
+sudo pacman -S qtile pacman-contrib
+#+end_src
 
-The following comments are the copyright and licensing information from the default
-qtile config. Copyright (c) 2010 Aldo Cortesi, 2010, 2014 dequis, 2012 Randall Ma,
-2012-2014 Tycho Andersen, 2012 Craig Barnes, 2013 horsik, 2013 Tao Sauvage
+** Also install all the dependencies
+#+begin_src bash
+yay -S xfce4-power-manager blueberry flameshot polkit-gnome nitrogen picom ncpamixer nm-applet
 
-Modified by Derek Taylor
-- My YouTube: [[http://www.youtube.com/c/DistroTube][http://www.youtube.com/c/DistroTube]]
-- My GitLab:  [[http://www.gitlab.com/dwt1/][http://www.gitlab.com/dwt1/]]
+#+end_src
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this
-software and associated documentation files (the "Software"), to deal in the Software
-without restriction, including without limitation the rights to use, copy, modify,
-merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to the following
-conditions:
+**  On Debian/Ubuntu based systems
+#+begin_src bash
+sudo apt-get install qtile 
+#+end_src
 
-The above copyright notice and this permission notice shall be included in all copies
-or substantial portions of the Software.
+** Also install all the dependencies
+#+begin_src bash
+sudo add-apt-repository ppa:regolith-linux/unstable -y
+sudo apt-get install xfce4-power-manager blueberry flameshot polkit-gnome nitrogen picom ncpamixer nm-applet
 
+#+end_src
 * Features of Qtile
 - Simple, small and extensible. It's easy to write your own layouts, widgets and commands.
 - Configured in Python.
@@ -72,39 +73,19 @@ Just some variables I am setting to make my life easier.
 #+BEGIN_SRC python
 mod = "mod4"                                     # Sets mod key to SUPER/WINDOWS
 myTerm = "alacritty"                             # My terminal of choice
-myConfig = "/home/dt/.config/qtile/config.py"    # The Qtile config file location
+myConfig = "/home/dt/.config/qtile/config.py"     # The Qtile config file location
+editor = "emacsclient -c -a emacs"
+browser = "brave"
+files   = "pcmanfm"
+music   ="spotify"
 #+END_SRC
 
-* Keybindings
-These are the keybindings for qtile.
-
-| A FEW IMPORTANT KEYBINDINGS | ASSOCIATED ACTION                                                        |
-|-----------------------------+--------------------------------------------------------------------------|
-| MODKEY + RETURN             | opens terminal (alacritty is the terminal but can be easily changed)     |
-| MODKEY + SHIFT + RETURN     | opens run launcher (dmenu is the run launcher but can be easily changed) |
-| MODKEY + TAB                | rotates through the available layouts                                    |
-| MODKEY + SHIFT + c          | closes window with focus                                                 |
-| MODKEY + SHIFT + r          | restarts qtile                                                           |
-| MODKEY + SHIFT + q          | quits qtile                                                              |
-| MODKEY + 1-9                | switch focus to workspace (1-9)                                          |
-| MODKEY + SHIFT + 1-9        | send focused window to workspace (1-9)                                   |
-| MODKEY + j                  | lazy layout up (switches focus between windows in the stack)             |
-| MODKEY + k                  | lazy layout down (switches focus between windows in the stack)           |
-| MODKEY + SHIFT + j          | lazy layout shuffle_up (rotates the windows in the stack)                |
-| MODKEY + SHIFT + k          | lazy layout shuffle_down (rotates the windows in the stack)              |
-| MODKEY + h                  | expand size of window (MondadTall layout)                                |
-| MODKEY + l                  | shrink size of window (MondadTall layout)                                |
-| MODKEY + w                  | switch focus to monitor 1                                                |
-| MODKEY + e                  | switch focus to monitor 2                                                |
-| MODKEY + r                  | switch focus to monitor 3                                                |
-| MODKEY + period             | switch focus to next monitor                                             |
-| MODKEY + comma              | switch focus to prev monitor                                             |
 
 #+BEGIN_SRC python
 keys = [
          ### The essentials
          Key([mod], "Return",
-             lazy.spawn(myTerm+" -e fish"),
+             lazy.spawn(myTerm+" -e zsh"),
              desc='Launches My Terminal'
              ),
          Key([mod, "shift"], "Return",
@@ -128,10 +109,24 @@ keys = [
              lazy.shutdown(),
              desc='Shutdown Qtile'
              ),
-         Key(["control", "shift"], "e",
-             lazy.spawn("emacsclient -c -a emacs"),
-             desc='Doom Emacs'
+         Key([mod], "e",
+             lazy.spawn(files),
+             desc='launches my file manager'
              ),
+
+         Key([mod], "c",
+             lazy.spawn(editor),
+             desc='launches my text editor'
+
+         Key([mod], "b",
+             lazy.spawn(browser),
+             desc='opens browser'
+             ),
+         # volume controls for default fn keys
+           Key([], "XF86AudioMute",
+             lazy.spawn('amixer -D pulse set Master 1+ toggle')),
+         Key([], "XF86AudioLowerVolume", lazy.spawn(' amixer -D pulse sset Master 5%-')),
+         Key([], "XF86AudioRaiseVolume", lazy.spawn(' amixer -D pulse sset Master 5%+')),
          ### Switch focus to specific monitor (out of three)
          Key([mod], "w",
              lazy.to_screen(0),
