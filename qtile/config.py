@@ -1,3 +1,12 @@
+sudo pacman -S qtile pacman-contrib
+
+yay -S xfce4-power-manager blueberry flameshot polkit-gnome nitrogen picom ncpamixer nm-applet
+
+sudo apt-get install qtile
+
+sudo add-apt-repository ppa:regolith-linux/unstable -y
+sudo apt-get install xfce4-power-manager blueberry flameshot polkit-gnome nitrogen picom ncpamixer nm-applet
+
 # -*- coding: utf-8 -*-
 import os
 import re
@@ -11,26 +20,23 @@ from typing import List  # noqa: F401
 
 mod = "mod4"                                     # Sets mod key to SUPER/WINDOWS
 myTerm = "alacritty"                             # My terminal of choice
-myConfig = "~/.config/qtile/config.py"    # The Qtile config file location
+myConfig = "/home/dt/.config/qtile/config.py"     # The Qtile config file location
+editor = "emacsclient -c -a emacs"
+browser = "brave"
+files   = "pcmanfm"
+music   ="spotify"
 
 keys = [
          ### The essentials
-         Key([mod], "x",
+         Key([mod], "Return",
              lazy.spawn(myTerm+" -e zsh"),
              desc='Launches My Terminal'
              ),
-         # volume controls for default fn keys 
-           Key([], "XF86AudioMute",
-             lazy.spawn('amixer -D pulse set Master 1+ toggle')),
-         Key([], "XF86AudioLowerVolume", lazy.spawn(' amixer -D pulse sset Master 5%-')),
-         Key([], "XF86AudioRaiseVolume", lazy.spawn(' amixer -D pulse sset Master 5%+')),
-            #program launcher 
          Key([mod, "shift"], "Return",
              # lazy.spawn("dmenu_run -p 'Run: '"),
              lazy.spawn("rofi -show drun -config ~/.config/rofi/themes/dt-dmenu.rasi -display-drun \"Run: \" -drun-display-format \"{name}\""),
              desc='Run Launcher'
              ),
-            #app and qtile controls
          Key([mod], "Tab",
              lazy.next_layout(),
              desc='Toggle through layouts'
@@ -47,60 +53,50 @@ keys = [
              lazy.shutdown(),
              desc='Shutdown Qtile'
              ),
+         Key([mod], "e",
+             lazy.spawn(files),
+             desc='launches my file manager'
+             ),
+
          Key([mod], "c",
-             lazy.spawn("emacsclient -c -a emacs"),
-             desc='GUI Text Editor'
+             lazy.spawn(editor),
+             desc='launches my text editor'
+
+         Key([mod], "s",
+             lazy.spawn(music),
+             desc='opens spotify'
              ),
          Key([mod], "b",
-             lazy.spawn("brave"),
+             lazy.spawn(browser),
              desc='opens browser'
              ),
-          Key([mod], "e",
-              lazy.spawn("pcmanfm"),
-              desc='launches my gui file manager pcmanfm'),
-           Key([mod], "p",
-           lazy.spawn("flameshot full -p ~/Pictures"),
-               desc='launches flameshot'),  
-
-        
-
-
-    # Key([mod], "Print",
-          #    lazy.spawn('-e flameshot full -p ~/Pictures'),
-          #    desc='Mark an area and screenshot it 10 seconds later'),
-          #      Key([mod], "p",
-          #    lazy.spawn('-e flameshot full -p ~/Pictures'),
-          #    desc='Take a screenshot of your active monitor and copy it to your clipboard'),
-          #  Key([mod,"shift"], "p",
-          #    lazy.spawn('-e flameshot gui -p ~/Pictures'),
-          #      desc='Mark an area and screenshot it to your clipboard'),
-         
+         # volume controls for default fn keys
+           Key([], "XF86AudioMute",
+             lazy.spawn('amixer -D pulse set Master 1+ toggle')),
+         Key([], "XF86AudioLowerVolume", lazy.spawn(' amixer -D pulse sset Master 5%-')),
+         Key([], "XF86AudioRaiseVolume", lazy.spawn(' amixer -D pulse sset Master 5%+')),
          ### Switch focus to specific monitor (out of three)
          Key([mod], "w",
              lazy.to_screen(0),
              desc='Keyboard focus to monitor 1'
-             ), 
-         
-         # Key([mod, "shift"], "p",
-         #     lazy.spawn("flameshot full -p ~/Pictures"),
-         #     desc='taking a fullscreen screen shot'),
-         # Key([mod], "e",
-         #     lazy.to_screen(1),
-         #     desc='Keyboard focus to monitor 2'
-         #     ),
-         # Key([mod], "r",
-         #     lazy.to_screen(2),
-         #     desc='Keyboard focus to monitor 3'
-         #     ),
-         # ### Switch focus of monitors
+             ),
+         Key([mod], "e",
+             lazy.to_screen(1),
+             desc='Keyboard focus to monitor 2'
+             ),
+         Key([mod], "r",
+             lazy.to_screen(2),
+             desc='Keyboard focus to monitor 3'
+             ),
+         ### Switch focus of monitors
          Key([mod], "period",
              lazy.next_screen(),
              desc='Move focus to next monitor'
              ),
-         # Key([mod], "comma",
-         #     lazy.prev_screen(),
-         #     desc='Move focus to prev monitor'
-         #     ),
+         Key([mod], "comma",
+             lazy.prev_screen(),
+             desc='Move focus to prev monitor'
+             ),
          ### Treetab controls
          Key([mod, "control"], "k",
              lazy.layout.section_up(),
@@ -248,12 +244,7 @@ keys = [
              lazy.spawn(myTerm+" -e ncpamixer"),
              desc='ncpamixer'
              ),
-        
-   ]
-             
-    
-   
-
+]
 
 group_names = [("WWW", {'layout': 'monadtall'}),
                ("DEV", {'layout': 'monadtall'}),
@@ -291,7 +282,7 @@ layouts = [
     layout.Tile(shift_windows=True, **layout_theme),
     layout.Stack(num_stacks=2),
     layout.TreeTab(
-         font = "Mononoki Nerd Font",
+         font = "Ubuntu",
          fontsize = 10,
          sections = ["FIRST", "SECOND"],
          section_fontsize = 11,
@@ -319,7 +310,7 @@ prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
 
 ##### DEFAULT WIDGET SETTINGS #####
 widget_defaults = dict(
-    font="Mononoki Nerd Font Mono",
+    font="Ubuntu Mono",
     fontsize = 12,
     padding = 2,
     background=colors[2]
@@ -339,7 +330,7 @@ def init_widgets_list():
                        mouse_callbacks = {'Button1': lambda qtile: qtile.cmd_spawn('dmenu_run')}
                        ),
               widget.GroupBox(
-                       font = "Mononoki Nerd Font Bold",
+                       font = "Ubuntu Bold",
                        fontsize = 9,
                        margin_y = 3,
                        margin_x = 0,
@@ -360,7 +351,7 @@ def init_widgets_list():
                        ),
               widget.Prompt(
                        prompt = prompt,
-                       font = "Mononoki Nerd Font Mono",
+                       font = "Ubuntu Mono",
                        padding = 10,
                        foreground = colors[3],
                        background = colors[1]
@@ -383,25 +374,25 @@ def init_widgets_list():
                        padding = 0,
                        fontsize = 37
                        ),
-              # widget.TextBox(
-              #          text = " ₿",
-              #          padding = 0,
-              #          foreground = colors[2],
-              #          background = colors[4],
-              #          fontsize = 12
-              #          ),
-              # widget.BitcoinTicker(
-              #          foreground = colors[2],
-              #          background = colors[4],
-              #          padding = 5
-              #          ),
-              # widget.TextBox(
-              #          text = '',
-              #          background = colors[4],
-              #          foreground = colors[5],
-              #          padding = 0,
-              #          fontsize = 37
-                       # ),
+              widget.TextBox(
+                       text = " ₿",
+                       padding = 0,
+                       foreground = colors[2],
+                       background = colors[4],
+                       fontsize = 12
+                       ),
+              widget.BitcoinTicker(
+                       foreground = colors[2],
+                       background = colors[4],
+                       padding = 5
+                       ),
+              widget.TextBox(
+                       text = '',
+                       background = colors[4],
+                       foreground = colors[5],
+                       padding = 0,
+                       fontsize = 37
+                       ),
               widget.TextBox(
                        text = " 🌡",
                        padding = 2,
@@ -470,7 +461,7 @@ def init_widgets_list():
                        fontsize = 37
                        ),
               widget.Net(
-                       interface = "wlp3s0",
+                       interface = "enp6s0",
                        format = '{down} ↓↑ {up}',
                        foreground = colors[2],
                        background = colors[4],
@@ -535,40 +526,27 @@ def init_widgets_list():
                        background = colors[0],
                        padding = 5
                        ),
-             #     widget.TextBox(
-             #     text = " Bat:",
-             #     foreground = colors[2],
-             #     background = colors[5],
-             #     padding = 0
-             #     ),
-             # widget.Battery(
-             #     foreground = colors[2],
-             #     background = colors[5],
-             #     padding = 5
-                 # ),
-
-    ]
+              ]
     return widgets_list
 
 def init_widgets_screen1():
     widgets_screen1 = init_widgets_list()
     return widgets_screen1                       # Slicing removes unwanted widgets on Monitors 1,3
 
-# def init_widgets_screen2():
-#     widgets_screen2 = init_widgets_list()
-#     return widgets_screen2                       # Monitor 2 will display all widgets in widgets_list
+def init_widgets_screen2():
+    widgets_screen2 = init_widgets_list()
+    return widgets_screen2                       # Monitor 2 will display all widgets in widgets_list
 
 def init_screens():
     return [Screen(top=bar.Bar(widgets=init_widgets_screen1(), opacity=1.0, size=20)),
-            # Screen(top=bar.Bar(widgets=init_widgets_screen2(), opacity=1.0, size=20)),
-            # Screen(top=bar.Bar(widgets=init_widgets_screen1(), opacity=1.0, size=20))
-            ]
+            Screen(top=bar.Bar(widgets=init_widgets_screen2(), opacity=1.0, size=20)),
+            Screen(top=bar.Bar(widgets=init_widgets_screen1(), opacity=1.0, size=20))]
 
 if __name__ in ["config", "__main__"]:
     screens = init_screens()
     widgets_list = init_widgets_list()
     widgets_screen1 = init_widgets_screen1()
-    # widgets_screen2 = init_widgets_screen2()
+    widgets_screen2 = init_widgets_screen2()
 
 def window_to_prev_group(qtile):
     if qtile.currentWindow is not None:

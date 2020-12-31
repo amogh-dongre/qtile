@@ -5,6 +5,8 @@
 - [[#installation][Installation]]
   -  [[#on-arch-based-system][On arch based system]]
   - [[#also-install-all-the-dependencies][Also install all the dependencies]]
+  -  [[#on-debianubuntu-based-systems][On Debian/Ubuntu based systems]]
+  - [[#also-install-all-the-dependencies-1][Also install all the dependencies]]
 - [[#features-of-qtile][Features of Qtile]]
 - [[#imports][Imports]]
 - [[#variables][Variables]]
@@ -118,6 +120,10 @@ keys = [
              lazy.spawn(editor),
              desc='launches my text editor'
 
+         Key([mod], "s",
+             lazy.spawn(music),
+             desc='opens spotify'
+             ),
          Key([mod], "b",
              lazy.spawn(browser),
              desc='opens browser'
