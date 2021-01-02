@@ -24,7 +24,7 @@ myConfig = "/home/dt/.config/qtile/config.py"  # The Qtile config file location
 editor = "emacsclient -c -a emacs"
 browser = "brave"
 files = "pcmanfm"
-music = "spotify-client"
+music = "spotify"
 
 keys = [
          ### The essentials

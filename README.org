@@ -80,8 +80,11 @@ myConfig = "/home/dt/.config/qtile/config.py"  # The Qtile config file location
 editor = "emacsclient -c -a emacs"
 browser = "brave"
 files = "pcmanfm"
-music = "spotify-client"
+music = "spotify"
 #+END_SRC
+
+#+RESULTS:
+: None
 
 * Keybindings
 #+BEGIN_SRC python
