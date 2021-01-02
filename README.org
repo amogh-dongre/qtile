@@ -10,6 +10,7 @@
 - [[#features-of-qtile][Features of Qtile]]
 - [[#imports][Imports]]
 - [[#variables][Variables]]
+- [[#keybindings][Keybindings]]
 - [[#groups][Groups]]
 - [[#settings-for-some-layouts][Settings For Some Layouts]]
 - [[#layouts][Layouts]]
@@ -73,16 +74,16 @@ from typing import List  # noqa: F401
 Just some variables I am setting to make my life easier.
 
 #+BEGIN_SRC python
-mod = "mod4"                                     # Sets mod key to SUPER/WINDOWS
-myTerm = "alacritty"                             # My terminal of choice
-myConfig = "/home/dt/.config/qtile/config.py"     # The Qtile config file location
+mod = "mod4"  # Sets mod key to SUPER/WINDOWS
+myTerm = "alacritty"  # My terminal of choice
+myConfig = "/home/dt/.config/qtile/config.py"  # The Qtile config file location
 editor = "emacsclient -c -a emacs"
 browser = "brave"
-files   = "pcmanfm"
-music   ="spotify"
+files = "pcmanfm"
+music = "spotify-client"
 #+END_SRC
 
-
+* Keybindings
 #+BEGIN_SRC python
 keys = [
          ### The essentials

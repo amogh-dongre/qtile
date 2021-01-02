@@ -18,13 +18,13 @@ from libqtile import layout, bar, widget, hook
 from libqtile.lazy import lazy
 from typing import List  # noqa: F401
 
-mod = "mod4"                                     # Sets mod key to SUPER/WINDOWS
-myTerm = "alacritty"                             # My terminal of choice
-myConfig = "/home/dt/.config/qtile/config.py"     # The Qtile config file location
+mod = "mod4"  # Sets mod key to SUPER/WINDOWS
+myTerm = "alacritty"  # My terminal of choice
+myConfig = "/home/dt/.config/qtile/config.py"  # The Qtile config file location
 editor = "emacsclient -c -a emacs"
 browser = "brave"
-files   = "pcmanfm"
-music   ="spotify"
+files = "pcmanfm"
+music = "spotify-client"
 
 keys = [
          ### The essentials
