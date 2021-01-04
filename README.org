@@ -62,6 +62,7 @@ sudo apt-get install xfce4-power-manager blueberry flameshot polkit-gnome nitrog
 #+begin_src bash
 git clone https://github.com/amogh-dongre/qtile ~/.config 
 #+end_src
+Note : ppa is for picom as compton is old has not been updated
 * Features of Qtile
 - Simple, small and extensible. It's easy to write your own layouts, widgets and commands.
 - Configured in Python.
