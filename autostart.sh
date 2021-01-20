@@ -1,7 +1,6 @@
 #! /bin/bash 
 picom --experimental-backend --config ~/.config/picom/picom.sample.conf &
 nitrogen --restore &
-# urxvtd -q -o -f &
 xfce4-power-manager&
 ncpamixer&
 blueberry-tray&
