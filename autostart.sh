@@ -1,5 +1,5 @@
 #! /bin/bash 
-picom --experimental-backend --config ~/.config/picom/picom.sample.conf &
+picom --experimental-backend --config ~/.config/picom/picom.conf &
 nitrogen --restore &
 xfce4-power-manager&
 ncpamixer&

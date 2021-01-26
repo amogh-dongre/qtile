@@ -343,7 +343,7 @@ layouts = [
     layout.Tile(shift_windows=True, **layout_theme),
     layout.Stack(num_stacks=2),
     layout.TreeTab(
-         font = "Ubuntu",
+         font = "Ubuntu Mono",
          fontsize = 10,
          sections = ["FIRST", "SECOND"],
          section_fontsize = 11,
